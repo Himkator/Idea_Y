@@ -18,6 +18,7 @@ public class ProfileDTO {
     private String message;
 //    private String token;
     private Long id;
+    private Long userId;
     private String email;
     private String fullName;
     private String photoUrl;

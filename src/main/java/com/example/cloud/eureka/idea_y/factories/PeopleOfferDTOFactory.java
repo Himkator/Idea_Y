@@ -28,7 +28,6 @@ public class PeopleOfferDTOFactory {
                 .categories(peopleOffer.getCategories())
                 .occupation(peopleOffer.getOccupation())
                 .userId(peopleOffer.getUser().getId())
-                .id(peopleOffer.getId())
                 .build();
     }
 

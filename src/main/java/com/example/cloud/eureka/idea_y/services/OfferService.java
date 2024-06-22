@@ -193,13 +193,13 @@ public class OfferService {
         return companyOfferDTO1;
     }
 
-    public List<PeopleOfferDTO> getAllPeopleOfferByUser(PeopleOfferDTO peopleOfferDTO){
+    public List<PeopleOfferDTO> getAllPeopleOfferByUser(){
         User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         List<PeopleOffer> peopleOffers=peopleOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt)));
         return peopleOffers.stream().map(factoryPeople::makePeopleOfferDTO).collect(Collectors.toList());
     }
 
-    public List<CompanyOfferDTO> getAllCompanyOfferByUser(CompanyOfferDTO companyOfferDTO){
+    public List<CompanyOfferDTO> getAllCompanyOfferByUser(){
         List<CompanyOffer> companyOffers=companyOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt)));
         return companyOffers.stream()
                 .map(factoryCompany::makeCompanyOfferDTO)

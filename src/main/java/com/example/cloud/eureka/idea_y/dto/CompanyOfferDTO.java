@@ -18,6 +18,7 @@ public class CompanyOfferDTO {
     private String message;
 //    private String token;
     private Long id;
+    private Long userId;
     private String title;
     private String location;
     private String categories;

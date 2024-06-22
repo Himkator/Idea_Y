@@ -24,8 +24,8 @@ public class ProfileController {
     private final OfferService offerService;
 
     @GetMapping
-    public ResponseEntity<ProfileDTO> getProfile(@RequestBody ProfileDTO profileDTO){
-        return ResponseEntity.ok(profileService.getProfile(profileDTO));
+    public ResponseEntity<ProfileDTO> getProfile(){
+        return ResponseEntity.ok(profileService.getProfile());
     }
 
     @PutMapping("/change")
@@ -34,13 +34,13 @@ public class ProfileController {
     }
 
     @GetMapping("/peopleOffers")
-    public ResponseEntity<List<PeopleOfferDTO>> getAllPeopleOffersByUser(@RequestBody PeopleOfferDTO peopleOfferDTO){
-        return ResponseEntity.ok(offerService.getAllPeopleOfferByUser(peopleOfferDTO));
+    public ResponseEntity<List<PeopleOfferDTO>> getAllPeopleOffersByUser(){
+        return ResponseEntity.ok(offerService.getAllPeopleOfferByUser());
     }
 
     @GetMapping("/companyOffers")
-    public ResponseEntity<List<CompanyOfferDTO>> getAllCompanyOffersByUser(@RequestBody CompanyOfferDTO companyOfferDTO){
-        return ResponseEntity.ok(offerService.getAllCompanyOfferByUser(companyOfferDTO));
+    public ResponseEntity<List<CompanyOfferDTO>> getAllCompanyOffersByUser(){
+        return ResponseEntity.ok(offerService.getAllCompanyOfferByUser());
     }
 
 }

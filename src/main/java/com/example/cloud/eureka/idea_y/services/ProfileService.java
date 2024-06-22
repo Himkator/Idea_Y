@@ -17,7 +17,7 @@ public class ProfileService {
     private final JWTUtils jwtUtils;
     private final ProfileDTOFactory factoryProfile;
 
-    public ProfileDTO getProfile(ProfileDTO profileDTO){
+    public ProfileDTO getProfile(){
         if((JWTAuthFilter.jwt +"").isBlank()) {
             ProfileDTO profileDTO1=new ProfileDTO();
             profileDTO1.setStatusCode(500);

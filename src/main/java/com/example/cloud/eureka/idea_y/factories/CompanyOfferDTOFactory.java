@@ -20,6 +20,7 @@ public class CompanyOfferDTOFactory {
     public CompanyOfferDTO makeCompanyOfferDTO(CompanyOffer companyOffer){
         return CompanyOfferDTO.builder()
                 .id(companyOffer.getId())
+                .userId(companyOffer.getUser().getId())
                 .email(companyOffer.getEmail())
                 .photoUrl(companyOffer.getPhotoUrl())
                 .linkedinUrl(companyOffer.getLinkedinUrl())

@@ -21,6 +21,7 @@ public class ProfileDTOFactory {
         return ProfileDTO.builder()
                 .email(profile.getUser().getEmail())
                 .id(profile.getId())
+                .userId(profile.getUser().getId())
                 .fullName(profile.getFullName())
                 .telegramUrl(profile.getTelegramUrl())
                 .photoUrl(profile.getPhotoUrl())
