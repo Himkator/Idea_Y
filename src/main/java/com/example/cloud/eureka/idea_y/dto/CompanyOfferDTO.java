@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class CompanyOfferDTO {
     private int statusCode;
     private String message;
-    private String token;
+//    private String token;
     private Long id;
     private String title;
     private String location;

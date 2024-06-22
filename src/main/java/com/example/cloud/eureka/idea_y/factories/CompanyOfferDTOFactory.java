@@ -1,5 +1,6 @@
 package com.example.cloud.eureka.idea_y.factories;
 
+import com.example.cloud.eureka.idea_y.configs.JWTAuthFilter;
 import com.example.cloud.eureka.idea_y.dto.CompanyOfferDTO;
 import com.example.cloud.eureka.idea_y.entities.CompanyOffer;
 import com.example.cloud.eureka.idea_y.entities.User;
@@ -34,7 +35,7 @@ public class CompanyOfferDTOFactory {
     }
 
     public CompanyOffer makeCompanyOfferFromDTO(CompanyOfferDTO companyOfferDTO){
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(companyOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         return CompanyOffer.builder()
                 .user(user)
                 .linkedinUrl(companyOfferDTO.getLinkedinUrl())

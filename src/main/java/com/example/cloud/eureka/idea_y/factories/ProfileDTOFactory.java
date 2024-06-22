@@ -1,5 +1,6 @@
 package com.example.cloud.eureka.idea_y.factories;
 
+import com.example.cloud.eureka.idea_y.configs.JWTAuthFilter;
 import com.example.cloud.eureka.idea_y.dto.ProfileDTO;
 import com.example.cloud.eureka.idea_y.entities.Profile;
 import com.example.cloud.eureka.idea_y.entities.User;
@@ -28,7 +29,7 @@ public class ProfileDTOFactory {
     }
 
     public Profile makeProfileFromDTO(ProfileDTO profileDTO){
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(profileDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         return Profile.builder()
                 .user(user)
                 .fullName(profileDTO.getFullName())

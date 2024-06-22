@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ProfileDTO {
     private int statusCode;
     private String message;
-    private String token;
+//    private String token;
     private Long id;
     private String email;
     private String fullName;

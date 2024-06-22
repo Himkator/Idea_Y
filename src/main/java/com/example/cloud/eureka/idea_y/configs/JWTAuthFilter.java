@@ -24,6 +24,7 @@ import java.io.IOException;
 public class JWTAuthFilter extends OncePerRequestFilter {
     private final JWTUtils jwtUtils;
     private final UserDetailService userDetailService;
+    public static String jwt = null;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -36,6 +37,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             return;
         }
         jwtToken=authHeader.substring(7).trim();
+        jwt=jwtToken;
         try{
             username=jwtUtils.extractUsername(jwtToken);
             if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){

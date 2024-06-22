@@ -1,5 +1,6 @@
 package com.example.cloud.eureka.idea_y.services;
 
+import com.example.cloud.eureka.idea_y.configs.JWTAuthFilter;
 import com.example.cloud.eureka.idea_y.dto.ProfileDTO;
 import com.example.cloud.eureka.idea_y.entities.Profile;
 import com.example.cloud.eureka.idea_y.factories.ProfileDTOFactory;
@@ -17,19 +18,19 @@ public class ProfileService {
     private final ProfileDTOFactory factoryProfile;
 
     public ProfileDTO getProfile(ProfileDTO profileDTO){
-        if((profileDTO.getToken()+"").isBlank()) {
+        if((JWTAuthFilter.jwt +"").isBlank()) {
             ProfileDTO profileDTO1=new ProfileDTO();
             profileDTO1.setStatusCode(500);
             profileDTO1.setMessage("User id or id is null");
             return profileDTO1;
         }
-        if(!userRepository.existsByEmail(jwtUtils.extractUsername(profileDTO.getToken()))){
+        if(!userRepository.existsByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt))){
             ProfileDTO profileDTO1=new ProfileDTO();
             profileDTO1.setStatusCode(500);
             profileDTO1.setMessage("User or profile is null");
             return profileDTO1;
         }
-        ProfileDTO profileDTO1=factoryProfile.makeProfileDTO(profileRepository.findByUser(userRepository.findByEmail(jwtUtils.extractUsername(profileDTO.getToken()))));
+        ProfileDTO profileDTO1=factoryProfile.makeProfileDTO(profileRepository.findByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt))));
         profileDTO1.setStatusCode(200);
         profileDTO1.setMessage("Profile");
 
@@ -37,13 +38,13 @@ public class ProfileService {
     }
 
     public ProfileDTO updateProfile(ProfileDTO profileDTO){
-        if((profileDTO.getToken()+"").isBlank() && (profileDTO.getId()+"").isBlank()){
+        if((JWTAuthFilter.jwt+"").isBlank() && (profileDTO.getId()+"").isBlank()){
             ProfileDTO profileDTO1=new ProfileDTO();
             profileDTO1.setStatusCode(500);
             profileDTO1.setMessage("User id or id is null");
             return profileDTO1;
         }
-        Profile profile=profileRepository.findByUser(userRepository.findByEmail(jwtUtils.extractUsername(profileDTO.getToken())));
+        Profile profile=profileRepository.findByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt)));
         profile.setFullName(profileDTO.getFullName());
         profile.setPhotoUrl(profileDTO.getPhotoUrl());
         profile.setTelegramUrl(profileDTO.getTelegramUrl());

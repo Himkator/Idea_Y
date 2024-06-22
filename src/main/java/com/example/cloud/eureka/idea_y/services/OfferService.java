@@ -1,5 +1,6 @@
 package com.example.cloud.eureka.idea_y.services;
 
+import com.example.cloud.eureka.idea_y.configs.JWTAuthFilter;
 import com.example.cloud.eureka.idea_y.dto.CompanyOfferDTO;
 import com.example.cloud.eureka.idea_y.dto.OfferDTO;
 import com.example.cloud.eureka.idea_y.dto.PeopleOfferDTO;
@@ -45,8 +46,8 @@ public class OfferService {
 
     public PeopleOfferDTO createPeopleOffer(PeopleOfferDTO peopleOfferDTO){
         PeopleOfferDTO peopleOfferDTO1;
-        if(!(peopleOfferDTO.getToken()+"").isBlank()){
-            User user=userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken()));
+        if(!(JWTAuthFilter.jwt +"").isBlank()){
+            User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
             PeopleOffer peopleOffer=factoryPeople.makePeopleOfferFromDTO(peopleOfferDTO);
             user.addPeopleToUser(peopleOffer);
             peopleOfferRepository.saveAndFlush(peopleOffer);
@@ -63,8 +64,8 @@ public class OfferService {
 
     public CompanyOfferDTO createCompanyOffer(CompanyOfferDTO companyOfferDTO){
         CompanyOfferDTO companyOfferDTO1;
-        if(!(companyOfferDTO.getToken()+"").isBlank()){
-            User user=userRepository.findByEmail(jwtUtils.extractUsername(companyOfferDTO.getToken()));
+        if(!(JWTAuthFilter.jwt+"").isBlank()){
+            User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
             CompanyOffer companyOffer=factoryCompany.makeCompanyOfferFromDTO(companyOfferDTO);
             user.addComapnyToUser(companyOffer);
             companyOfferRepository.saveAndFlush(companyOffer);
@@ -89,13 +90,13 @@ public class OfferService {
 
     public PeopleOfferDTO updatePeopleOffer(PeopleOfferDTO peopleOfferDTO){
         PeopleOfferDTO peopleOfferDTO1;
-        if((peopleOfferDTO.getToken()+"").isBlank()&&(peopleOfferDTO.getId()+"").isBlank()){
+        if((JWTAuthFilter.jwt+"").isBlank()&&(peopleOfferDTO.getId()+"").isBlank()){
             peopleOfferDTO1=new PeopleOfferDTO();
             peopleOfferDTO1.setStatusCode(500);
             peopleOfferDTO1.setMessage("User id or Offer id is null");
             return peopleOfferDTO1;
         }
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         PeopleOffer peopleOffer=peopleOfferRepository.findById(peopleOfferDTO.getId()).orElseThrow();
         if(!user.getPeopleOffers().contains(peopleOffer) && !user.getRole().equals("Admin")){
             peopleOfferDTO1=new PeopleOfferDTO();
@@ -120,13 +121,13 @@ public class OfferService {
 
     public CompanyOfferDTO updateCompanyOffer(CompanyOfferDTO companyOfferDTO){
         CompanyOfferDTO companyOfferDTO1;
-        if((companyOfferDTO.getId()+"").isBlank()&&(companyOfferDTO.getToken()+"").isBlank()){
+        if((companyOfferDTO.getId()+"").isBlank()&&(JWTAuthFilter.jwt+"").isBlank()){
             companyOfferDTO1=new CompanyOfferDTO();
             companyOfferDTO1.setStatusCode(500);
             companyOfferDTO1.setMessage("User id or Offer id is null");
             return companyOfferDTO1;
         }
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(companyOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         CompanyOffer companyOffer=companyOfferRepository.findById(companyOfferDTO.getId()).orElseThrow();
         if(!user.getCompanyOffers().contains(companyOffer) && !user.getRole().equals("Admin")) {
             companyOfferDTO1=new CompanyOfferDTO();
@@ -154,12 +155,12 @@ public class OfferService {
 
     public PeopleOfferDTO deletePeopleOffer(PeopleOfferDTO peopleOfferDTO){
         PeopleOfferDTO peopleOfferDTO1=new PeopleOfferDTO();
-        if((peopleOfferDTO.getId()+"").isBlank()&&(peopleOfferDTO.getToken()+"").isBlank()){
+        if((peopleOfferDTO.getId()+"").isBlank()&&(JWTAuthFilter.jwt+"").isBlank()){
             peopleOfferDTO1.setStatusCode(500);
             peopleOfferDTO1.setMessage("User token or offer id is null");
             return peopleOfferDTO1;
         }
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         PeopleOffer peopleOffer=peopleOfferRepository.findById(peopleOfferDTO.getId()).orElseThrow();
         if(!user.getPeopleOffers().contains(peopleOffer) && !user.getRole().equals("Admin")){
             peopleOfferDTO1.setStatusCode(500);
@@ -174,12 +175,12 @@ public class OfferService {
 
     public CompanyOfferDTO deleteCompanyOffer(CompanyOfferDTO companyOfferDTO){
         CompanyOfferDTO companyOfferDTO1=new CompanyOfferDTO();
-        if((companyOfferDTO.getId()+"").isBlank()&&(companyOfferDTO.getToken()+"").isBlank()){
+        if((companyOfferDTO.getId()+"").isBlank()&&(JWTAuthFilter.jwt+"").isBlank()){
             companyOfferDTO1.setStatusCode(500);
             companyOfferDTO1.setMessage("User id or Offer id is null");
             return companyOfferDTO1;
         }
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(companyOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         CompanyOffer companyOffer=companyOfferRepository.findById(companyOfferDTO.getId()).orElseThrow();
         if(!user.getCompanyOffers().contains(companyOffer) && !user.getRole().equals("Admin")){
             companyOfferDTO1.setStatusCode(500);
@@ -193,13 +194,13 @@ public class OfferService {
     }
 
     public List<PeopleOfferDTO> getAllPeopleOfferByUser(PeopleOfferDTO peopleOfferDTO){
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken()));
-        List<PeopleOffer> peopleOffers=peopleOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken())));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
+        List<PeopleOffer> peopleOffers=peopleOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt)));
         return peopleOffers.stream().map(factoryPeople::makePeopleOfferDTO).collect(Collectors.toList());
     }
 
     public List<CompanyOfferDTO> getAllCompanyOfferByUser(CompanyOfferDTO companyOfferDTO){
-        List<CompanyOffer> companyOffers=companyOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(companyOfferDTO.getToken())));
+        List<CompanyOffer> companyOffers=companyOfferRepository.findAllByUser(userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt)));
         return companyOffers.stream()
                 .map(factoryCompany::makeCompanyOfferDTO)
                 .collect(Collectors.toList());

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PeopleOfferDTO {
     private int statusCode;
     private String message;
-    private String token;
+//    private String token;
     private Long id;
     private Long userId;
     private String email;

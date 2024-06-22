@@ -1,5 +1,6 @@
 package com.example.cloud.eureka.idea_y.factories;
 
+import com.example.cloud.eureka.idea_y.configs.JWTAuthFilter;
 import com.example.cloud.eureka.idea_y.dto.PeopleOfferDTO;
 import com.example.cloud.eureka.idea_y.entities.PeopleOffer;
 import com.example.cloud.eureka.idea_y.entities.User;
@@ -32,7 +33,7 @@ public class PeopleOfferDTOFactory {
     }
 
     public PeopleOffer makePeopleOfferFromDTO(PeopleOfferDTO peopleOfferDTO){
-        User user=userRepository.findByEmail(jwtUtils.extractUsername(peopleOfferDTO.getToken()));
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         return PeopleOffer.builder()
                 .biography(peopleOfferDTO.getBiography())
                 .categories(peopleOfferDTO.getCategories())
